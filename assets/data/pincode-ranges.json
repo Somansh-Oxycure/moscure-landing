@@ -1,0 +1,29 @@
+{
+  "ranges": [
+    {
+      "label": "Delhi",
+      "start": 110001,
+      "end": 110099
+    },
+    {
+      "label": "Ghaziabad",
+      "start": 201001,
+      "end": 201020
+    },
+    {
+      "label": "Noida & Greater Noida",
+      "start": 201301,
+      "end": 201318
+    },
+    {
+      "label": "Faridabad",
+      "start": 121001,
+      "end": 121013
+    },
+    {
+      "label": "Gurugram",
+      "start": 122001,
+      "end": 122105
+    }
+  ]
+}

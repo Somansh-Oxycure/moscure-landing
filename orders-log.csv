@@ -1,0 +1,5 @@
+submitted_at,name,email,phone,product,quantity,unit_price,order_total,address_line_1,address_line_2,city,state,pincode,payment_status,payment_link,ip_address,mail_status
+"2026-07-29 12:00:19 CEST",somansh,somansh2002@gmail.com,9034952636,"Moscure IPO",1,12999,12999,,,,,,"Order details submitted",,::1,php_mail_failed
+"2026-07-29 12:00:26 CEST",somansh,somansh2002@gmail.com,9034952636,"Moscure IPO",1,12999,12999,,,,,,"Order details submitted",,::1,php_mail_failed
+"2026-07-29 12:01:13 CEST",somansh,somansh2002@gmail.com,9034952636,"Moscure IPO",1,12999,12999,,,,,,"Order details submitted",,::1,php_mail_failed
+"2026-07-29 12:03:46 CEST",somansh,somansh2002@gmail.com,9034952636,"Moscure IPO",1,12999,12999,,,,,,"Order details submitted",,::1,accepted_by_php_mail
