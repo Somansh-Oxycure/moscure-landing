@@ -229,23 +229,40 @@ $order = [
     'payment_link' => $paymentLink,
 ];
 
+$supabasePayload = [
+    'user_id' => null,
+    'razorpay_order_id' => null,
+    'razorpay_payment_id' => null,
+    'amount_paise' => $orderTotalNumber * 100,
+    'status' => 'pending',
+    'items' => [
+        [
+            'sku' => $product,
+            'name' => $productInfo['label'] ?? $product,
+            'qty' => $quantityNumber,
+            'price' => $unitPriceNumber
+        ]
+    ],
+    'address' => [
+        'name' => $name,
+        'email' => $email,
+        'phone' => $phone,
+        'line1' => $addressLine1,
+        'line2' => $addressLine2,
+        'city' => $city,
+        'state' => $state,
+        'pincode' => $pincode
+    ]
+];
+
 try {
-    $sent = send_order_mail(
-        ADMIN_EMAIL,
-        'New Moscure order request - ' . $product,
-        email_message($order),
-        $email
-    );
+    moscure_insert_supabase('orders', $supabasePayload);
 
-    append_order_log($order, $sent ? 'accepted_by_php_mail' : 'php_mail_failed');
-
-    if (!$sent) {
-        error_log('Moscure order email failed to send via mail().');
-        respond(false, 'We could not send your order details right now. Please try again.', 500);
-    }
+    append_order_log($order, 'supabase_inserted');
 
     respond(true, 'Order details sent.');
 } catch (Throwable $exception) {
-    error_log('Moscure order email failed: ' . $exception->getMessage());
+    error_log('Moscure order failed to insert to Supabase: ' . $exception->getMessage());
+    append_order_log($order, 'supabase_failed');
     respond(false, 'We could not send your order details right now. Please try again.', 500);
 }

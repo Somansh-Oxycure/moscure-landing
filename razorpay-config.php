@@ -2,13 +2,53 @@
 
 declare(strict_types=1);
 
-const RAZORPAY_KEY_ID = 'rzp_live_TBiBUXa8XSXNqx';
-const RAZORPAY_KEY_SECRET = 'zp6g96Fuvlv0iHk0zNf27XMF';
-const RAZORPAY_CURRENCY = 'INR';
-const RAZORPAY_ERROR_LOG_FILE = 'razorpay-error.log';
-const MOSCURE_ADMIN_EMAIL = 'operations@moscure.com';
-const MOSCURE_FROM_EMAIL = 'operations@moscure.com';
-const MOSCURE_FROM_NAME = 'Moscure Orders';
+function moscure_load_env(): void
+{
+    $path = __DIR__ . '/.env';
+    if (!is_file($path)) {
+        return;
+    }
+
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) {
+            continue;
+        }
+
+        if (strpos($line, '=') === false) {
+            continue;
+        }
+
+        list($name, $value) = explode('=', $line, 2);
+        $name = trim($name);
+        $value = trim($value);
+
+        // Remove surrounding quotes if any
+        if (preg_match('/^"([^"]*)"$/', $value, $matches) || preg_match('/^\'([^\']*)\'$/', $value, $matches)) {
+            $value = $matches[1];
+        }
+
+        if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
+            putenv("{$name}={$value}");
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+}
+
+// Load environment variables
+moscure_load_env();
+
+// Configuration constants
+define('RAZORPAY_KEY_ID', getenv('RAZORPAY_KEY_ID') ?: 'rzp_live_TBiBUXa8XSXNqx');
+define('RAZORPAY_KEY_SECRET', getenv('RAZORPAY_KEY_SECRET') ?: 'zp6g96Fuvlv0iHk0zNf27XMF');
+define('RAZORPAY_CURRENCY', 'INR');
+define('RAZORPAY_ERROR_LOG_FILE', 'razorpay-error.log');
+define('MOSCURE_ADMIN_EMAIL', 'operations@moscure.com');
+define('MOSCURE_FROM_EMAIL', 'operations@moscure.com');
+define('MOSCURE_FROM_NAME', 'Moscure Orders');
+define('SUPABASE_URL', getenv('SUPABASE_URL') ?: 'https://lrfplgrkhkrkwubncpdu.supabase.co');
+define('SUPABASE_ANON_KEY', getenv('SUPABASE_ANON_KEY') ?: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxyZnBsZ3JraGtya3d1Ym5jcGR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MjE3NzQsImV4cCI6MjEwMDE5Nzc3NH0.hweHqFUPfHnXI1pwN-bFQ6rtndHezPQCVLJ5wdTcMcg');
 
 function moscure_products(): array
 {
@@ -178,4 +218,51 @@ function moscure_send_mail(string $to, string $subject, string $body, string $re
 function moscure_money(int $amount): string
 {
     return 'INR ' . number_format($amount);
+}
+
+function moscure_insert_supabase(string $table, array $data): array
+{
+    if (!function_exists('curl_init')) {
+        throw new RuntimeException('PHP cURL is required.');
+    }
+
+    $ch = curl_init(SUPABASE_URL . '/rest/v1/' . $table);
+    $caBundle = __DIR__ . '/cacert.pem';
+    
+    $options = [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'apikey: ' . SUPABASE_ANON_KEY,
+            'Authorization: Bearer ' . SUPABASE_ANON_KEY,
+            'Prefer: return=representation',
+        ],
+    ];
+    
+    if (is_file($caBundle)) {
+        $options[CURLOPT_CAINFO] = $caBundle;
+    }
+
+    curl_setopt_array($ch, $options);
+
+    $responseBody = curl_exec($ch);
+    $statusCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+
+    if ($responseBody === false || $responseBody === '') {
+        throw new RuntimeException($curlError !== '' ? $curlError : 'No response from Supabase.');
+    }
+
+    $decoded = json_decode($responseBody, true);
+
+    if ($statusCode < 200 || $statusCode >= 300) {
+        $message = $decoded['message'] ?? 'Supabase insert failed.';
+        throw new RuntimeException((string) $message);
+    }
+
+    return $decoded;
 }

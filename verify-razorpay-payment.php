@@ -303,9 +303,41 @@ $payment = [
     'customer_mail_status' => 'not_sent',
 ];
 
-$mailStatuses = send_payment_emails($payment);
-$payment['admin_mail_status'] = $mailStatuses['admin_mail_status'];
-$payment['customer_mail_status'] = $mailStatuses['customer_mail_status'];
+$supabasePayload = [
+    'user_id' => null,
+    'razorpay_order_id' => $payment['razorpay_order_id'],
+    'razorpay_payment_id' => $payment['razorpay_payment_id'],
+    'amount_paise' => $expectedAmount,
+    'status' => 'confirmed',
+    'items' => [
+        [
+            'sku' => $payment['product'],
+            'name' => $product['label'] ?? $payment['product'],
+            'qty' => (int) $payment['quantity'],
+            'price' => (int) $payment['unit_price']
+        ]
+    ],
+    'address' => [
+        'name' => $payment['name'],
+        'email' => $payment['email'],
+        'phone' => $payment['phone'],
+        'line1' => $payment['address_line_1'],
+        'line2' => $payment['address_line_2'],
+        'city' => $payment['city'],
+        'state' => $payment['state'],
+        'pincode' => $payment['pincode']
+    ]
+];
+
+try {
+    moscure_insert_supabase('orders', $supabasePayload);
+    $payment['admin_mail_status'] = 'supabase_inserted';
+    $payment['customer_mail_status'] = 'supabase_inserted';
+} catch (Throwable $exception) {
+    moscure_log_razorpay_error('Supabase insert failed for payment ' . $payment['razorpay_payment_id'] . ': ' . $exception->getMessage());
+    $payment['admin_mail_status'] = 'supabase_failed';
+    $payment['customer_mail_status'] = 'supabase_failed';
+}
 
 append_verified_payment_log($payment);
 
