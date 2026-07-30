@@ -529,38 +529,22 @@ $moscureIpi = $moscureProducts['Moscure IPI'];
 
   <section id="contact" class="gap no-top">
     <div class="container">
-      <form role="form" class="get-a-quote moscure-checkout-form" id="contact-form" method="post" action="send-order.php"
+      <form role="form" class="get-a-quote moscure-checkout-form" id="contact-form" method="post" action="submit-contact.php"
         style="background-image: url(assets/img/lins-img.png);">
         <div class="checkout-form-copy">
-          <div class="checkout-form-icon"><i class="flaticon-successful"></i></div>
-          <span class="checkout-urgency">Limited Monsoon Offer &mdash; extra 10% off your first order</span>
-          <h3>Order Your Moscure</h3>
-          <!-- <h6><del>&#8377;21,599</del> &#8377;19,500 &mdash; you save &#8377;2,099</h6> -->
-          <p>Reserve your chemical-free mosquito protection today with free India shipping, 1-year warranty and 7-day easy returns.</p>
+          <div class="checkout-form-icon" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-envelope" style="font-size: 40px; color: #e62d3e;"></i></div>
+          <span class="checkout-urgency">We're here to help</span>
+          <h3>Get In Touch</h3>
+          <p>Have questions about Moscure or need help with your order? Drop us a message and our team will get back to you within 24 hours.</p>
         </div>
         <div class="checkout-form-fields">
-            <input type="text" name="Complete Name" placeholder="Complete Name" required="">
+            <input type="text" name="Name" placeholder="Complete Name" required="">
 
-            <input type="email" name="Email Address" placeholder="Email Address" required="">
+            <input type="email" name="Email" placeholder="Email Address" required="">
 
-            <input type="number" name="Phone No" placeholder="Phone No" required="">
+            <input type="number" name="Phone" placeholder="Phone Number" required="">
 
-            <p>Which product would you like?</p>
-            <div class="d-flex align-items-center">
-              <div class="radio-button">
-                <input type="radio" id="Virtual" name="fav_language" value="Moscure IPO" checked>
-                <label for="Virtual">Outdoor (IPO)</label>
-              </div>
-              <div class="radio-button">
-                <input type="radio" id="css" name="fav_language" value="Moscure IPI">
-                <label for="css">Indoor (IPI)</label><br>
-              </div>
-            </div>
-            <div class="checkout-payment-row">
-              <span>Payment methods accepted</span>
-              <img src="assets/img/moscure/payment-methods.png" alt="UPI, cards, net banking and COD accepted">
-            </div>
-            <button type="submit" class="btn"><span>Reserve / Order Now</span></button>
+            <button type="submit" class="btn"><span>Send Enquiry</span></button>
         </div>
       </form>
     </div>
