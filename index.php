@@ -92,12 +92,12 @@ src="https://www.facebook.com/tr?id=1906315613652195&ev=PageView&noscript=1"
               <span class="hero-product-tag hero-product-tag-outdoor">Outdoor Unit</span>
               <span class="hero-product-tag hero-product-tag-indoor">Indoor Unit</span>
               <div class="price price-ipi">
-                <span>Save &#8377;1,501</span>
+                <span>Save &#8377;1,901</span>
                 <h5><sup>&#8377;</sup><?php echo moscure_format_price((int) $moscureIpi['price']); ?></h5>
                 <del>&#8377;3,200</del>
               </div>
               <div class="price">
-                <span>Save &#8377;9,001</span>
+                <span>Save &#8377;12,001</span>
                 <h5><sup>&#8377;</sup><?php echo moscure_format_price((int) $moscureIpo['price']); ?></h5>
                 <del>&#8377;25,000</del>
               </div>
