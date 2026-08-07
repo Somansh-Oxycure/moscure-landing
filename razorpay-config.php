@@ -55,12 +55,12 @@ function moscure_products(): array
     return [
         'Moscure IPO' => [
             'label' => 'Outdoor Unit',
-            'price' => 12999,
+            'price' => 15999,
             'image' => 'assets/img/moscure/ipo-hero.webp',
         ],
         'Moscure IPI' => [
             'label' => 'Indoor Unit',
-            'price' => 1299,
+            'price' => 1699,
             'image' => 'assets/img/moscure/ipi-product.png',
         ],
     ];
