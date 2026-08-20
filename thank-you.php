@@ -10,6 +10,13 @@ $mailMessage = $mailStatus === 'failed'
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5FPLF3W6');</script>
+<!-- End Google Tag Manager -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BKBNG530DK"></script>
 <script>
@@ -52,6 +59,10 @@ src="https://www.facebook.com/tr?id=1906315613652195&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 </head>
 <body class="moscure-thankyou-page">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FPLF3W6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
   <main class="moscure-thankyou-wrap">
     <section class="moscure-thankyou-card" aria-labelledby="thankYouTitle">
       <div class="moscure-thankyou-copy">
