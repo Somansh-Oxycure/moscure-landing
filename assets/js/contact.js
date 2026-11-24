@@ -102,7 +102,7 @@
         productName: "Moscure IPO",
         productLabel: "Outdoor Unit",
         productImage: "assets/img/moscure/ipo-hero.webp",
-        unitPrice: 12999,
+        unitPrice: 14999,
         quantity: 1
       };
       var buyButtons = document.querySelectorAll(".moscure-buy-now");
