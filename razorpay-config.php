@@ -60,7 +60,7 @@ function moscure_products(): array
         ],
         'Moscure IPI' => [
             'label' => 'Indoor Unit',
-            'price' => 1299,
+            'price' => 1399,
             'image' => 'assets/img/moscure/ipi-product.png',
         ],
     ];
